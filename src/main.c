@@ -4,28 +4,22 @@
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = NULL;
 
-#define FRAMES 30
+#define FRAMES 60
 #define WINDOW_SIZE 800
 
 int game_is_running; 
 
-struct game_object{
+struct card{
     int x;
     int y;
     int size;
     int vx;
     int vy;
     int speed;
-}player;
+};
 
 void setup(){
     game_is_running=1;
-    player.x = 40;
-    player.y = 40;
-    player.size = 40;
-    player.vx=0;
-    player.vy=0;
-    player.speed=5;
 }
 
 void initialize_window(){
@@ -56,16 +50,12 @@ void handle_input(){
             case SDL_KEYDOWN:
                 switch(event.key.keysym.sym){
                     case SDLK_LEFT:
-                        player.vx=-player.speed;
                         break;
                     case SDLK_RIGHT:
-                        player.vx=player.speed;
                         break;
                     case SDLK_UP:
-                        player.vy=-player.speed;
                         break;
                     case SDLK_DOWN:
-                        player.vy=player.speed;
                         break;
                     default:
                         break;
@@ -74,16 +64,12 @@ void handle_input(){
             case SDL_KEYUP:
                 switch(event.key.keysym.sym){
                     case SDLK_LEFT:
-                        if(player.vx<0){player.vx=0;}
                         break;
                     case SDLK_RIGHT:
-                        if(player.vx>1){player.vx=0;}
                         break;
                     case SDLK_UP:
-                        if(player.vy<0){player.vy=0;}
                         break;
                     case SDLK_DOWN:
-                        if(player.vy>0){player.vy=0;}
                         break;
                     default:
                         break;
@@ -96,8 +82,6 @@ void handle_input(){
 }
 
 void update(){
-    player.x=player.x+player.vx;
-    player.y=player.y+player.vy;
 }
 
 void render(){
@@ -105,7 +89,7 @@ void render(){
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_Rect rect = {player.x,player.y,player.size,player.size};  
+    SDL_Rect rect = {50,50,100,200};  
     SDL_RenderFillRect(renderer ,&rect);	
     SDL_RenderPresent(renderer);
 }
